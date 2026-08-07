@@ -35,6 +35,7 @@ ssh camera 'cd /opt/camera && cp Caddyfile.pre-acs-flip-20260807-* Caddyfile && 
 
 ## Bẫy
 
+- **`/live/*` phải dùng `handle_path` (KHÔNG phải `handle`)** — `handle` giữ nguyên prefix, go2rtc nhận `/live/stream.html` → 404 → live view đen thui dù stream chạy ngon. `handle_path` tự strip `/live`. Đã sửa 2026-08-07.
 - **`caddy reload` KHÔNG ăn trên VM này** — container caddy tắt admin API (port 2019 refused) nên reload fail im lặng, config cũ vẫn chạy trong RAM. Đổi Caddyfile xong PHẢI `docker restart camera-caddy-1` (downtime ~3-5 giây). Verify bằng probe: `curl "https://camera-test.dcnet.vn/login?probe=x"` rồi grep marker trong `docker logs cam-acs-fdw-acs-1` — đừng tin HTTP 200 suông (2 app cùng title).
 
 - Tên service PHẢI khác `fall_detection_web` (stack cũ chiếm alias đó trên `dcnet-shared` — trùng = DNS round-robin trỏ nhầm).
