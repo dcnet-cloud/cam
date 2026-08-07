@@ -3,11 +3,11 @@
     {
       "id": "feat-000",
       "name": "Deploy stack port từ camera-ai",
-      "description": "Port docker-compose.prod.yml (trim: bỏ postgres/event_collector/reid/MQTT), Caddyfile (TLS + forward_auth /live/*), go2rtc.yaml pattern, .env.example, runbook từ repo camera-ai. Port endpoint /api/auth/check (~vài chục dòng). Deploy demo lên VM camera-test.dcnet.vn — mặc định chạy song song stack POC cũ (không phá mosquitto 8883 mượn cert Caddy). Làm ĐẦU TIÊN: mở khóa demo live với khách.",
+      "description": "Port docker-compose.prod.yml (trim: bỏ postgres/event_collector/reid/MQTT), Caddyfile (TLS + forward_auth /live/*), go2rtc.yaml pattern, .env.example từ camera-ai. Port /api/auth/check + tách go2rtc_internal_url. Deploy lên VM, flip domain camera-test.dcnet.vn sang portal ACS (user chốt dùng domain cũ, không subdomain mới); stack POC cũ vẫn chạy nội bộ.",
       "spec": "docs/specs/acs-cctv-cloud-spec.md",
       "dependencies": [],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "2026-08-07: https://camera-test.dcnet.vn/login → HTTP 200 UI mới; /live/ chưa login → 401 (forward_auth qua /api/auth/check hoạt động). Stack cam-acs (fdw-acs + go2rtc-acs pin 1.9.4) up trên VM /opt/cam-acs. Rollback: Caddyfile.pre-acs-flip-20260807-*. Runbook: knowledge/runbooks/acs-portal-deploy.md. Commits 05de096, cd0a1af."
     },
     {
       "id": "feat-001",

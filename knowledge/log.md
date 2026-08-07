@@ -11,3 +11,4 @@ title: Knowledge change log
 - 2026-08-07 — domain/acs-capacity-bitrate — thêm: số liệu dung lượng/băng thông ACS, NAS 1TB chỉ đủ demo
 - 2026-08-07 — systems/camera-ai-deploy-stack — thêm: khảo sát repo camera-ai, tầng deploy tận dụng được (compose/Caddy/go2rtc/runbook) + 3 gap
 - 2026-08-07 — decisions/sqlite-for-acs — thêm: chốt giữ SQLite WAL cho ACS; bẫy KHÔNG đặt file DB trên NAS
+- 2026-08-07 — runbooks/acs-portal-deploy — thêm: deploy/update/rollback portal ACS (flip domain cũ), thêm camera, bẫy alias/cert

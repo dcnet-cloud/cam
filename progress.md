@@ -2,8 +2,8 @@
 
 ## Current State
 
-**Last Updated:** 2026-08-07
-**Active Feature:** (chưa có — tất cả not-started)
+**Last Updated:** 2026-08-07 (chiều)
+**Active Feature:** (feat-000 DONE; kế tiếp: UI tuning theo user, rồi feat-005 RBAC+audit)
 
 ## Status
 
@@ -12,6 +12,7 @@
 - [x] Spec ACS CCTV Cloud chốt: [docs/specs/acs-cctv-cloud-spec.md](docs/specs/acs-cctv-cloud-spec.md) (commit 1ba79a1)
 - [x] Bootstrap harness dcnet-workflow: feature_list.json (6 feature ACS), init.sh, knowledge/ (seed 4 concept)
 - [x] `./init.sh` xanh (syntax check 2 app)
+- [x] **feat-000 DONE**: portal ACS live tại https://camera-test.dcnet.vn (flip từ stack POC; xem evidence trong feature_list.json + runbook knowledge/runbooks/acs-portal-deploy.md). Admin mặc định admin/admin — user PHẢI đổi.
 
 ### What's In Progress
 
@@ -19,7 +20,7 @@
 
 ### What's Next
 
-1. feat-000: Deploy stack port từ camera-ai (mở khóa demo live — xem knowledge/systems/camera-ai-deploy-stack.md)
+1. UI tuning trên bản live (yêu cầu user 2026-08-07) → sau đó hứng thiết bị khách, thêm cam vào go2rtc.yaml + /cameras (xem runbook)
 2. feat-005: RBAC + audit log — ƯU TIÊN NHANH theo user 2026-08-07 (~1.5 ngày); MFA tách ra feat-007 để sau
 3. feat-001: Gỡ AI + Teldrive khỏi portal ACS
 4. feat-002: Recorder ghi liên tục + index + retention (mở khóa demo "xem lại")
