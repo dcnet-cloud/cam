@@ -35,6 +35,7 @@ ssh camera 'cd /opt/camera && cp Caddyfile.pre-acs-flip-20260807-* Caddyfile && 
 
 ## Bẫy
 
+- **forward_auth phải strip header WS**: thêm `header_up -Upgrade` + `header_up -Connection` trong block `forward_auth` — không thì sub-request auth mang `Upgrade: websocket` sang FastAPI → 403 → Caddy chặn WS → live spin mãi. (CORS manifest.json alexxit.github.io trong console là red herring, kệ.)
 - **`/live/*` phải dùng `handle_path` (KHÔNG phải `handle`)** — `handle` giữ nguyên prefix, go2rtc nhận `/live/stream.html` → 404 → live view đen thui dù stream chạy ngon. `handle_path` tự strip `/live`. Đã sửa 2026-08-07.
 - **`caddy reload` KHÔNG ăn trên VM này** — container caddy tắt admin API (port 2019 refused) nên reload fail im lặng, config cũ vẫn chạy trong RAM. Đổi Caddyfile xong PHẢI `docker restart camera-caddy-1` (downtime ~3-5 giây). Verify bằng probe: `curl "https://camera-test.dcnet.vn/login?probe=x"` rồi grep marker trong `docker logs cam-acs-fdw-acs-1` — đừng tin HTTP 200 suông (2 app cùng title).
 
