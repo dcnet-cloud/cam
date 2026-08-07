@@ -1,0 +1,13 @@
+streams:
+  # Camera khách sẽ thêm vào đây khi hứng thiết bị. Pattern Hikvision:
+  #   cam_<ten>:
+  #     - rtsp://${CAM_USER}:${CAM_PASS}@<ip>:554/Streaming/Channels/101   # main
+  #   cam_<ten>_sub:
+  #     - rtsp://${CAM_USER}:${CAM_PASS}@<ip>:554/Streaming/Channels/102   # sub 720p
+  {}
+
+api:
+  listen: ":1984"
+
+log:
+  level: info

@@ -43,6 +43,7 @@ Mô tả dưới 20 ký tự
 DEFAULT_CONFIG: dict[str, Any] = {
     "rtsp_url": "",
     "go2rtc_url": "",
+    "go2rtc_internal_url": "",  # backend-facing (frame/clip fetch); e.g. http://go2rtc:1984 trong docker
     "prompts": [],          # stored as JSON string
     "cameras": [],          # stored as JSON string
     "telegram_bot_token": "",
@@ -81,6 +82,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
 ENV_CONFIG_KEYS: dict[str, str] = {
     "RTSP_URL": "rtsp_url",
     "GO2RTC_URL": "go2rtc_url",
+    "GO2RTC_INTERNAL_URL": "go2rtc_internal_url",
     "TELEGRAM_BOT_TOKEN": "telegram_bot_token",
     "TELEGRAM_CHAT_ID": "telegram_chat_id",
     "AI_BASE_URL": "ai_base_url",

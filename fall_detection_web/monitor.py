@@ -594,12 +594,19 @@ def go2rtc_video_only_params(params: dict[str, str]) -> dict[str, str]:
     return filtered
 
 
+def go2rtc_backend_url(config: dict[str, Any]) -> str:
+    # Backend fetch (frame/clip/probe) ưu tiên go2rtc_internal_url (vd http://go2rtc:1984
+    # trong docker); go2rtc_url là URL browser-facing (vd /live sau Caddy) nên không dùng
+    # được từ trong container.
+    return str(config.get("go2rtc_internal_url") or config.get("go2rtc_url") or "").strip().rstrip("/")
+
+
 def go2rtc_frame_request(config: dict[str, Any], camera: dict[str, Any]) -> tuple[str, dict[str, str], str]:
     raw_source = str(camera.get("go2rtc_src") or "").strip()
     if is_http_url(raw_source):
         return with_video_only_query(raw_source), {}, go2rtc_source(camera)
 
-    base_url = str(config.get("go2rtc_url", "")).strip().rstrip("/")
+    base_url = go2rtc_backend_url(config)
     src = go2rtc_source(camera)
     if not base_url or not src:
         raise ValueError("go2rtc URL or camera source is empty")
@@ -641,7 +648,7 @@ def fetch_go2rtc_frame_bytes(config: dict[str, Any], camera: dict[str, Any], tim
 
 
 def go2rtc_api_base(config: dict[str, Any], camera: dict[str, Any]) -> str:
-    base_url = str(config.get("go2rtc_url", "")).strip().rstrip("/")
+    base_url = go2rtc_backend_url(config)
     if base_url:
         return base_url
     raw_source = str(camera.get("go2rtc_src") or "").strip()
@@ -658,7 +665,7 @@ def has_go2rtc_frame_source(config: dict[str, Any], camera: dict[str, Any]) -> b
     raw_source = str(camera.get("go2rtc_src") or "").strip()
     if is_http_url(raw_source):
         return True
-    return bool(str(config.get("go2rtc_url", "")).strip() and go2rtc_source(camera))
+    return bool(go2rtc_backend_url(config) and go2rtc_source(camera))
 
 
 def record_go2rtc_clip(config: dict[str, Any], camera: dict[str, Any], output_path: Path) -> Path | None:
@@ -702,8 +709,8 @@ def get_rtsp_input_url(config: dict[str, Any], camera: dict[str, Any]) -> str | 
     
     src = go2rtc_source(camera)
     if src:
-        # Extract host from go2rtc_url
-        go2rtc_url = str(config.get("go2rtc_url", "")).strip()
+        # Extract host from go2rtc backend URL (internal ưu tiên — RTSP 8554 cùng host)
+        go2rtc_url = go2rtc_backend_url(config)
         if go2rtc_url:
             parsed = urlparse(go2rtc_url)
             host = parsed.hostname or "127.0.0.1"

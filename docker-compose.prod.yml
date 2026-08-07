@@ -1,0 +1,39 @@
+# ACS portal — chạy SONG SONG stack camera-ai cũ trên VM camera-test.
+# Caddy (stack /opt/camera) reach qua external network dcnet-shared — KHÔNG publish port.
+services:
+  fall_detection_web:
+    build: ./fall_detection_web
+    env_file:
+      - path: ./.env
+        required: false
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      # Backend fetch frame/clip qua service name; browser live dùng go2rtc_url
+      # (set trong /settings = https://<domain>/live).
+      GO2RTC_INTERNAL_URL: ${GO2RTC_INTERNAL_URL:-http://go2rtc-acs:1984}
+    volumes:
+      - fdw_data:/app/data
+    restart: unless-stopped
+    networks: [default, dcnet-shared]
+
+  go2rtc-acs:
+    # Pin version — không dùng latest (runbook camera-ai O5)
+    image: alexxit/go2rtc:1.9.4
+    env_file:
+      - path: ./.env
+        required: false
+    volumes:
+      - ./go2rtc.yaml:/config/go2rtc.yaml:ro
+      - go2rtc_data:/config
+    restart: unless-stopped
+    networks: [default, dcnet-shared]
+
+volumes:
+  fdw_data:
+  go2rtc_data:
+
+networks:
+  default:
+    name: cam-acs_default
+  dcnet-shared:
+    external: true

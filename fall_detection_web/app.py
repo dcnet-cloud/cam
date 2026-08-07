@@ -456,6 +456,13 @@ def check_teldrive_token(payload: dict[str, Any] = Body(default={}), _: str = De
         raise HTTPException(status_code=400, detail=str(exc))
 
 
+@app.get("/api/auth/check")
+def auth_check(_: str = Depends(auth.require_auth)):
+    # Caddy forward_auth target: 200 nếu session JWT hợp lệ, 401 nếu không.
+    # Gate /live/* (go2rtc) phía reverse proxy.
+    return {"ok": True}
+
+
 @app.get("/api/status")
 def get_status(_: str = Depends(auth.require_auth)):
     c = config.read_config()
