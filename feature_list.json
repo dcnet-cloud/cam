@@ -1,0 +1,58 @@
+{
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Gỡ AI + Teldrive khỏi portal ACS",
+      "description": "Tắt/gỡ pipeline YOLO + AI Vision verification và Teldrive upload theo quyết định kiến trúc ACS (spec cấm sinh trắc học; Teldrive vi phạm 'dữ liệu lưu tại Việt Nam'). Portal thành CCTV thuần.",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": [],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-002",
+      "name": "Recorder ghi liên tục + index + retention",
+      "description": "ffmpeg segment 60s copy-codec → NAS mount, mỗi camera 1 process, restart + alert khi chết. Bảng `segments` (camera, start, duration, path). Retention: xóa file cũ nhất khi đầy đĩa / quá 60 ngày.",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": ["feat-001"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-003",
+      "name": "Playback timeline",
+      "description": "Query segments theo camera + khoảng thời gian, phát tuần tự. UI thanh timeline (phần nặng nhất, ước 1-2 tuần). Demo tối thiểu: list segment theo cam/giờ, chưa cần timeline đẹp.",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": ["feat-002"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-004",
+      "name": "Download video theo khoảng thời gian",
+      "description": "1 segment trả file thẳng; nhiều segment thì ffmpeg concat. Gắn phân quyền tải (phụ thuộc RBAC).",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": ["feat-002"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-005",
+      "name": "RBAC + MFA + audit log",
+      "description": "Thêm cột `role` vào bảng `users` (admin/viewer, quyền tải video) + decorator phân quyền. MFA TOTP (pyotp). Bảng `audit_log`: login, xem, tải, thao tác quản trị.",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": [],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-006",
+      "name": "Cảnh báo mất kết nối camera",
+      "description": "Hook vào recorder/monitor loop, phát hiện camera mất kết nối và gửi Telegram alert (hạ tầng Telegram sẵn có).",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": ["feat-002"],
+      "status": "not-started",
+      "evidence": ""
+    }
+  ]
+}

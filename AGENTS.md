@@ -16,6 +16,30 @@ This is a **monorepo of two independent applications** that share only a domain 
 
 **Diagrams** ([`docs/diagrams/`](docs/diagrams)) are produced by the `dcnet-diagram` skill: each `.html` is self-contained (dark/light toggle, PNG/SVG export) and re-rendered from its JSON-IR in `docs/diagrams/src/`. Start from [`docs/diagrams/README.md`](docs/diagrams/README.md) (file index + how-to) and [`docs/diagrams/EXPLAINER.md`](docs/diagrams/EXPLAINER.md) (per-diagram detail + provenance). To update a diagram, edit the `src/*.json`, re-run the matching renderer, then rebuild the gallery (`build_gallery.py manifest.json .`). Keep diagrams in sync when either app's flow changes. This `docs/diagrams/` folder is mirrored identically in the sibling `camera-ai` repo.
 
+## Workflow & state (dcnet-workflow)
+
+Repo chạy theo skill `dcnet-workflow` (superpowers + harness + OKF). Con trỏ, không chép workflow:
+
+### Startup Workflow (Before writing code)
+
+- Đọc [`feature_list.json`](feature_list.json) — feature active + evidence
+- Đọc [`progress.md`](progress.md) — ngữ cảnh xuyên phiên
+- Đọc [`knowledge/index.md`](knowledge/index.md) — tri thức lâu bền (OKF)
+- Chạy `./init.sh` — verify nhanh; baseline hỏng thì sửa trước
+- Việc lớn dở dang: xem [`session-handoff.md`](session-handoff.md)
+
+### One feature at a time / Stay in scope
+
+Chỉ 1 feature `in-progress` trong `feature_list.json`. Không sửa ngoài scope feature đang làm. Specs → `docs/specs/`, plans → `docs/plans/`.
+
+### Definition of Done
+
+Feature `done` only when: hành vi chạy thật + đã verify trong phiên này + `evidence` ghi vào `feature_list.json` + `./init.sh` còn xanh + dependency/runtime tái lập được. Tri thức lâu bền phát sinh → ghi `knowledge/` (hoặc note "no new knowledge" vào `knowledge/log.md`).
+
+### End of Session (Before ending)
+
+Cập nhật `progress.md` (Current State + next) + status/`evidence` trong `feature_list.json`; Knowledge Flush vào `knowledge/`; cập nhật `session-handoff.md` nếu việc lớn; commit ở trạng thái an toàn.
+
 ## Read the AGENTS.md before editing either app
 
 Each subproject has an `AGENTS.md` that encodes hard constraints. **These override general instincts — read the relevant one before changing code.** Highlights:
