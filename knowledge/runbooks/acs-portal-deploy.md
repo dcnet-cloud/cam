@@ -19,10 +19,13 @@ ssh camera 'cd /opt/cam-acs && docker compose -f docker-compose.prod.yml up -d -
 
 ## Thêm camera khách
 
-1. Sửa `/opt/cam-acs/go2rtc.yaml` (pattern Hikvision trong file) + `CAM_USER/CAM_PASS` trong `/opt/cam-acs/.env`
-2. `ssh camera 'cd /opt/cam-acs && docker compose -f docker-compose.prod.yml restart go2rtc-acs'`
-3. UI `/cameras`: thêm cam với `go2rtc_src` = tên stream (bẫy: rỗng → live "stream not found")
-4. Check RTSP reach từ VM: `nc -zv <ip-cam> 554`
+1. Check RTSP reach từ VM trước: `nc -zv <ip-cam> 554`
+2. Sửa `/opt/cam-acs/go2rtc.yaml` + creds trong `/opt/cam-acs/.env`. Path RTSP: Hikvision `/Streaming/Channels/101|102`; Axis `/axis-media/media.amp` (sub: `?resolution=1280x720&fps=15`)
+3. **`docker compose -f docker-compose.prod.yml up -d --force-recreate go2rtc-acs`** — BẪY: `restart` KHÔNG nạp lại env_file (container giữ env lúc create → rtsp `changeme:changeme` + `${VAR}` không expand); phải force-recreate
+4. Verify frame từ container fdw: `docker exec cam-acs-fdw-acs-1 python -c "import urllib.request as u; d=u.urlopen('http://go2rtc-acs:1984/api/frame.jpeg?src=<stream>',timeout=20).read(); print(len(d), d[:2]==b'\xff\xd8')"`
+5. UI `/cameras`: thêm cam với `go2rtc_src` = tên stream (bẫy: rỗng → live "stream not found"). `/settings`: `go2rtc_url` = `https://camera-test.dcnet.vn/live`
+
+Hiện trạng 2026-08-07: cam Axis DCNET (NAT 115.79.47.96:554, user root, creds copy từ /opt/camera-ai/.env) → streams `cam_dcnet` (main) + `cam_dcnet_sub` (720p@15), cả 2 verify JPEG OK.
 
 ## Rollback về stack POC cũ
 
