@@ -7,7 +7,7 @@
       "spec": "docs/specs/acs-cctv-cloud-spec.md",
       "dependencies": [],
       "status": "done",
-      "evidence": "2026-08-07: https://camera-test.dcnet.vn/login → HTTP 200 UI mới; /live/ chưa login → 401 (forward_auth qua /api/auth/check hoạt động). Stack cam-acs (fdw-acs + go2rtc-acs pin 1.9.4) up trên VM /opt/cam-acs. Rollback: Caddyfile.pre-acs-flip-20260807-*. Runbook: knowledge/runbooks/acs-portal-deploy.md. Commits 05de096, cd0a1af."
+      "evidence": "2026-08-07: https://camera-test.dcnet.vn/login → HTTP 200 UI mới; /live/ chưa login → 401 (forward_auth qua /api/auth/check hoạt động). Stack cam-acs (fdw-acs + go2rtc-acs pin 1.9.4) up trên VM /opt/cam-acs. Rollback: Caddyfile.pre-acs-flip-20260807-*. Runbook: knowledge/runbooks/acs-portal-deploy.md. Commits 05de096, 75d9003."
     },
     {
       "id": "feat-001",
