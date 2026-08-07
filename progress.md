@@ -13,6 +13,7 @@
 - [x] Bootstrap harness dcnet-workflow: feature_list.json (6 feature ACS), init.sh, knowledge/ (seed 4 concept)
 - [x] `./init.sh` xanh (syntax check 2 app)
 - [x] **feat-000 DONE**: portal ACS live tại https://camera-test.dcnet.vn (flip từ stack POC; xem evidence trong feature_list.json + runbook knowledge/runbooks/acs-portal-deploy.md). Admin mặc định admin/admin — user PHẢI đổi.
+- [x] Cam Axis DCNET (NAT 115.79.47.96) vào portal: go2rtc streams cam_dcnet + cam_dcnet_sub (frame JPEG verify OK), camera "DCNET Axis" ghi thẳng SQLite settings (go2rtc_src=cam_dcnet, go2rtc_url=https://camera-test.dcnet.vn/live), monitor auto-start sạch lỗi. Lưu ý: YOLO đang chạy trên cam này (AI chưa gỡ — feat-001).
 
 ### What's In Progress
 
