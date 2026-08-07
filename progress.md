@@ -19,8 +19,10 @@
 
 ### What's Next
 
-1. feat-001: Gỡ AI + Teldrive khỏi portal ACS (brainstorming → plan → worktree)
-2. feat-002: Recorder ghi liên tục + index + retention (mở khóa demo "xem lại")
+1. feat-000: Deploy stack port từ camera-ai (mở khóa demo live — xem knowledge/systems/camera-ai-deploy-stack.md)
+2. feat-001: Gỡ AI + Teldrive khỏi portal ACS
+3. feat-002: Recorder ghi liên tục + index + retention (mở khóa demo "xem lại")
+4. feat-005 (RBAC+MFA+audit) build nhanh được ~2.5-3 ngày trên auth.py sẵn có — đã chốt hướng với user 2026-08-07
 
 ## Blockers / Risks
 

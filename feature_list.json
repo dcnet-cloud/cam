@@ -1,6 +1,15 @@
 {
   "features": [
     {
+      "id": "feat-000",
+      "name": "Deploy stack port từ camera-ai",
+      "description": "Port docker-compose.prod.yml (trim: bỏ postgres/event_collector/reid/MQTT), Caddyfile (TLS + forward_auth /live/*), go2rtc.yaml pattern, .env.example, runbook từ repo camera-ai. Port endpoint /api/auth/check (~vài chục dòng). Deploy demo lên VM camera-test.dcnet.vn — mặc định chạy song song stack POC cũ (không phá mosquitto 8883 mượn cert Caddy). Làm ĐẦU TIÊN: mở khóa demo live với khách.",
+      "spec": "docs/specs/acs-cctv-cloud-spec.md",
+      "dependencies": [],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
       "id": "feat-001",
       "name": "Gỡ AI + Teldrive khỏi portal ACS",
       "description": "Tắt/gỡ pipeline YOLO + AI Vision verification và Teldrive upload theo quyết định kiến trúc ACS (spec cấm sinh trắc học; Teldrive vi phạm 'dữ liệu lưu tại Việt Nam'). Portal thành CCTV thuần.",
@@ -39,7 +48,7 @@
     {
       "id": "feat-005",
       "name": "RBAC + MFA + audit log",
-      "description": "Thêm cột `role` vào bảng `users` (admin/viewer, quyền tải video) + decorator phân quyền. MFA TOTP (pyotp). Bảng `audit_log`: login, xem, tải, thao tác quản trị.",
+      "description": "RBAC: cột `role` (admin/viewer) + flag `can_download` qua _ensure_column; role vào JWT claims; dependency require_role() bọc require_auth; trang quản lý user trong Settings (~1 ngày). MFA TOTP: pyotp + cột otp_secret, login 2 bước, QR enroll (~1 ngày). Audit: bảng `audit_log` + helper db.audit() gắn login/xem/tải/quản trị (~0.5 ngày). Không thư viện auth ngoài — đắp lên auth.py. /api/auth/check (feat-000) không đổi khi RBAC vào.",
       "spec": "docs/specs/acs-cctv-cloud-spec.md",
       "dependencies": [],
       "status": "not-started",
