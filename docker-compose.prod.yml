@@ -1,7 +1,9 @@
 # ACS portal — chạy SONG SONG stack camera-ai cũ trên VM camera-test.
 # Caddy (stack /opt/camera) reach qua external network dcnet-shared — KHÔNG publish port.
 services:
-  fall_detection_web:
+  # Tên service PHẢI khác "fall_detection_web" — stack camera-ai cũ đã dùng tên đó
+  # trên dcnet-shared; trùng alias = Docker DNS round-robin, Caddy cũ trỏ nhầm.
+  fdw-acs:
     build: ./fall_detection_web
     env_file:
       - path: ./.env
